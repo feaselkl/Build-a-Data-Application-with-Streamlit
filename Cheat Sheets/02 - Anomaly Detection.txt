@@ -1,0 +1,27 @@
+Demo 02 - Anomaly Detection
+---------------------------
+
+- Start in the ROOT directory for this repo!
+- If you have NOT created a virtual environment for this:
+    - Make a venv directory
+        mkdir venv
+    - Create a virtual environment
+        python -m venv venv/ex2
+- Activate the virtual environment
+    On WINDOWS:         venv\ex2\Scripts\activate.bat
+    On LINUX/MACOS:     source venv/ex2/bin/activate
+- Install relevant packages
+    pip install -r code/02_anomaly_detection/requirements.txt
+- Review the code in 02_parking_tickets_analysis\src\web\site.py
+- Navigate to 02_anomaly_detection/src/ and then kick off the API
+    On WINDOWS:         cd code\02_anomaly_detection\src\
+    On LINUX/MACOS:     cd code/02_anomaly_detection/src/
+    uvicorn app.main:app --host 0.0.0.0 --port 80
+- In a second terminal, activate the virtual environment again
+    On WINDOWS:         venv\ex2\Scripts\activate.bat
+    On LINUX/MACOS:     source venv/ex2/bin/activate
+- Kick off the Streamlit app
+    python -m streamlit run code/02_anomaly_detection/src/web/site.py
+- Close the Python terminal running uvicorn and exit from the one running Streamlit (Ctrl+C)
+- Deactivate the virtual environment when complete
+    deactivate

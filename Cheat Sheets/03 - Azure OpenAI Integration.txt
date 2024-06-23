@@ -1,0 +1,33 @@
+Demo 01 - Azure OpenAI Integration
+----------------------------------
+
+- Start in the ROOT directory for this repo!
+- If you have NOT created a virtual environment for this:
+    - Make a venv directory
+        mkdir venv
+    - Create a virtual environment
+        python -m venv venv/ex3
+- Activate the virtual environment
+    On WINDOWS:         venv\ex3\Scripts\activate.bat
+    On LINUX/MACOS:     source venv/ex3/bin/activate
+- Install relevant packages
+    pip install -r code/03_azure_openai_integration/requirements.txt
+- Review the code in 03_azure_openai_integration\
+- Make sure config.json has the relevant keys and values
+- Navigate to the code directory
+    On WINDOWS:         cd code\03_azure_openai_integration\
+    On LINUX/MACOS:     cd code/03_azure_openai_integration/
+- Kick off the Streamlit app
+    python -m streamlit run index.py
+- For Chat with Data, ask the following questions:
+    Which hotels are available in Aruba?
+    What are the amenities available for these hotels?
+- For Speech to text, enable the microphone and ask the following question:
+    What amenities will I find in hotels on Curacao?
+- For Call Center:
+    - Upload code/03_azure_openai_integration/sample_audio/02_Customer_Call_Bad.wav
+    - Review the transcription
+    - Select the two options for call compliance and perform call compliance
+- Exit Streamlit from the console (Ctrl+C)
+- Deactivate the virtual environment when complete
+    deactivate

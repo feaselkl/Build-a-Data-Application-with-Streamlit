@@ -1,0 +1,476 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Catallaxy Services | Build a Data Application with Streamlit</title>
+
+		<link rel="stylesheet" href="../reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/dist/theme/black.css" id="theme">
+		<link rel="stylesheet" href="../WebsiteAssets/mods.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h2>Build a Data Application with Streamlit</h2>
+					
+					<a href="https://www.catallaxyservices.com">Kevin Feasel</a> (<a href="https://twitter.com/feaselkl">@feaselkl</a>)<br />
+					<a href="https://csmore.info/on/streamlit">https://csmore.info/on/streamlit</a>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Who Am I?  What Am I Doing Here?</h3>
+					<div class="container">
+						<div class="col">
+							<table class="whoami">
+								<tr>
+									<td><a href="https://csmore.info"><img src="../WebsiteAssets/Logo.png" height="100" /></a></td>
+									<td nowrap><a href="https://csmore.info">Catallaxy Services</a></td>
+								</tr>
+								<tr>
+									<td><a href="https://curatedsql.com"><img src="../WebsiteAssets/CuratedSQLLogo.png" height="100" /></a></td>
+									<td nowrap><a href="https://curatedsql.com">Curated SQL</a></td>
+								</tr>
+								<tr>
+									<td><a href="https://www.amazon.com/Finding-Ghosts-Your-Data-Techniques/dp/1484288696"><img src="../WebsiteAssets/Finding-Ghosts.jpg" height="120" /></a></td>
+									<td nowrap><a href="https://www.amazon.com/Finding-Ghosts-Your-Data-Techniques/dp/1484288696">Finding Ghosts in Your Data</a></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col">
+							<a href="http://www.twitter.com/feaselkl"><img src="../WebsiteAssets/HeadShot.jpg" height="358" width="315" /></a>
+							<br />
+							<a href="http://www.twitter.com/feaselkl">@feaselkl</a>
+						</div>					
+					</div>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/motivation.jpg" data-background-opacity="0.2">
+					<h3>Motivation</h3>
+					
+					<p>My goals in this talk:</p>
+					
+					<ul>
+						<li>Introduce you to Streamlit</li>
+						<li>Walk through some of the functionality in Streamlit</li>
+						<li>Build sample Streamlit applications</li>
+						<li>Discuss hosting options and considerations</li>
+					</ul>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>What We'll Do</h3>
+
+					<img src="presentation/assets/image/Demo01.png" height="550" />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>What We'll Do</h3>
+					
+					<img src="presentation/assets/image/Demo02.png" height="550" />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>What We'll Do</h3>
+
+					<img src="presentation/assets/image/Demo03.png" height="550" />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>What We'll Do</h3>
+					
+					<img src="presentation/assets/image/Demo04.png" height="550" />
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>What We'll Do</h3>
+					
+					<img src="presentation/assets/image/Demo05.png" height="550" />
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li class="active">An Overview of Streamlit</li>
+						<li>Key Mechanics of Streamlit</li>
+						<li>Building Streamlit Applications</li>
+						<li>Hosting Streamlit</li>
+					</ol>
+				</section>
+
+				<section data-background-image="presentation/assets/background/chess-loss.jpg" data-background-opacity="0.2">
+					<h3>The Use Case</h3>
+					
+					<p>Streamlit is a Python library for building and sharing <strong>data applications</strong>.</p>
+
+					<p>A data application is a web-based application intended to display, analyze, or visualize data. This data may come from a database, set of files, API, or other data source.</p>
+				</section>
+
+				<section data-background-image="presentation/assets/background/skeleton-thinking.jpg" data-background-opacity="0.2">
+					<h3>Not All Applications are Data Applications</h3>
+
+					<p>Data applications in Streamlit allow for some level of interaction but Streamlit is not a replacement for general-purpose web development. There are some simplistic mechanisms in place for handling session state and user input, but you may find a more comprehensive web framework like Django to fit when you need to accept form input or display a variety of content-driven, templated pages.</p>
+				</section>
+
+				<section data-background-image="presentation/assets/background/questions.jpg" data-background-opacity="0.2">
+					<h3>Why Use Streamlit?</h3>
+
+					<ul>
+						<li>Develop web applications without needing to think about HTML, CSS, or JavaScript</li>
+						<li class="fragment">Works well with a variety of core Python libraries (scikit-learn, Pandas, spaCy) plus visualization libraries (Plotly, Matplotlib)</li>
+						<li class="fragment">Quickly visualize data science projects, similar to notebooks</li>
+						<li class="fragment">Allow for stream-based inputs and more interaction than notebooks</li>
+						<li class="fragment">Allow people who don't have Python installed to interact with your data</li>
+					</ul>
+				</section>
+
+				<section data-background-image="presentation/assets/background/blueprints.jpg" data-background-opacity="0.2">
+					<h3>Pre-Requisites</h3>
+
+					<ul>
+						<li>You must be running Python 3.8 or later to host Streamlit</li>
+						<li>Users must have a supported browser: Chromium (Chrome, Edge, Brave), Firefox, or Safari</li>
+					</ul>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>An Overview of Streamlit</li>
+						<li class="active">Key Mechanics of Streamlit</li>
+						<li>Building Streamlit Applications</li>
+						<li>Hosting Streamlit</li>
+					</ol>
+				</section>
+
+				<section data-background-image="presentation/assets/background/robot.jpg" data-background-opacity="0.2">
+					<h3>Before Installing Streamlit</h3>
+
+					<p>One very helpful preparatory action before installing Streamlit is to create a virtual environment.</p>
+
+					<p>Virtual environments help you isolate project dependencies and prevent scenarios where different projects have different and conflicting versions of dependency packages.</p>
+
+					<p>Run this in the root directory where you'll keep your Streamlit code.</p>
+
+					<pre><code data-trim><script type="text/template">
+						python -m venv <YOUR_VENV_NAME>
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Before Installing Streamlit</h3>
+
+					<p>Then, activate your virtual environment.</p>
+
+					<pre><code data-trim><script type="text/template">
+						# On Windows
+						<YOUR_VENV_NAME>\Scripts\activate.bat
+
+						# On Linux
+						source <YOUR_VENV_NAME>/bin/activate
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Deactivating Virtual Environments</h3>
+
+					<p>A virtual environment will be active until you close your terminal or manually deactivate it. To deactivate the virtual environment and return to your main Python setup:</p>
+
+					<pre><code data-trim><script type="text/template">
+						# On all operating systems
+						deactivate
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Installing Streamlit</h3>
+
+					<pre><code data-trim><script type="text/template">
+						pip install streamlit
+					</script></code></pre>
+
+					<p>Streamlit also installs the <code>pyarrow</code> package.</p>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Running Streamlit</h3>
+
+					<pre><code data-trim><script type="text/template">
+						streamlit run <YOUR_FILE_NAME>.py
+					</script></code></pre>
+
+					<p>Streamlit will then kick off a web server that will host your Python file, usually on port 8501.</p>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Building Blocks of Streamlit</h3>
+
+					<p>Most Streamlit apps have a few core components. Most things come from the <code>streamlit</code> library.</p>
+
+					<pre><code data-trim><script type="text/template">
+						import streamlit as st
+						st.title("This is the title of my Streamlit app")
+						st.header("This is a header")
+						st.subheader("This is a subheader")
+						st.text("This is some text within the subheader.")
+						st.markdown("We can also use `markdown` for formatting.")
+						st.markdown("### This is an H3 header")
+						x = 13 # This is just normal Python code!
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Getting Inspiration</h3>
+
+					<p>The Streamlit gallery has curated applications you can use as inspiration.</p>
+
+					<p><img src="presentation/assets/image/Streamlit-Gallery.png" height="530" /></p>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Streamlit Cheat Sheet</h3>
+
+					<p>Daniel Lewis has <a href="https://cheat-sheet.streamlit.app">a nice cheat sheet Streamlit application</a>.</p>
+
+					<p><img src="presentation/assets/image/Cheat-Sheet.png" height="530" /></p>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>An Overview of Streamlit</li>
+						<li>Key Mechanics of Streamlit</li>
+						<li class="active">Building Streamlit Applications</li>
+						<li>Hosting Streamlit</li>
+					</ol>
+				</section>
+
+				<section data-background-image="presentation/assets/background/code.jpg" data-background-opacity="0.2">
+					<h3>Building Streamlit Apps</h3>
+					
+					<p>The best way to get a handle on Streamlit is to build applications in the framework. Let's look at several demonstration apps that I've already built!</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/background/demo.jpg" data-background-opacity="0.2">
+					<h3>Demo Time</h3>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Themes</h3>
+
+					<p>Streamlit has some basic theming options available. You can try them out in the browser or create a config file in <code>./.streamlit/config.toml</code></code></p>
+
+					<pre><code data-line-numbers="|2-3|4-5|6-7|8-9|10-13" data-trim><script type="text/template">
+						[theme]
+						# Primary accent for interactive elements
+						primaryColor = '#7792E3'
+						# Background color for the main content area
+						backgroundColor = '#273346'
+						# Background color for sidebar and most interactive widgets
+						secondaryBackgroundColor = '#B9F1C0'
+						# Color used for almost all text
+						textColor = '#FFFFFF'
+						# Font family for all text in the app, except code blocks
+						# Accepted values (serif | sans serif | monospace) 
+						# Default: "sans serif"
+						font = "sans serif"
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Agenda</h3>
+					
+					<ol>
+						<li>An Overview of Streamlit</li>
+						<li>Key Mechanics of Streamlit</li>
+						<li>Building Streamlit Applications</li>
+						<li class="active">Hosting Streamlit</li>
+					</ol>
+				</section>
+
+				<section data-background-image="presentation/assets/background/folders.jpg" data-background-opacity="0.2">
+					<h3>Hosting Streamlit</h3>
+					
+					<p>There are a few ways to host Streamlit applications.</p>
+
+					<ul>
+						<li>Host on a server</li>
+						<li>Host in a Docker container</li>
+						<li>Host on Streamlit Community Cloud</li>
+						<li>Host in Snowflake</li>
+					</ul>
+				</section>
+
+				<section data-background-image="presentation/assets/background/server-room.jpg" data-background-opacity="0.2">
+					<h3>Hosting on a Server</h3>
+					
+					<p>Self-hosting Streamlit requires a web server proxy like NGINX. This proxy will allow you to forward inbound calls to your running Streamlit process.</p>
+
+					<p>On Linux, you can run your Streamlit app as a background service using <code>systemd</code>. To do so, you will need a config file in <code>/.config/systemd/user/</code>.</p>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Hosting on a Server</h3>
+
+					<pre><code data-line-numbers="|1-3|5-9|11-12" data-trim><script type="text/template">
+						[Unit]
+						Description=Streamlit Service
+						After=network.target
+
+						[Service]
+						Type=simple
+						ExecStart=/usr/bin/python3 -m streamlit run /path/to/your/streamlit_app.py
+						Restart=on-failure
+						RestartSec=2
+
+						[Install]
+						WantedBy=default.target
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Hosting on a Server</h3>
+					
+					<p>Once you have a config file, you can enable and activate the service:</p>
+
+					<pre><code data-trim><script type="text/template">
+						systemctl --user daemon-reload
+						systemctl --user enable streamlit.service
+						systemctl --user start streamlit.service
+						systemctl --user status streamlit.service
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Hosting in Docker</h3>
+					
+					<p>One common method for deploying Streamlit apps is to host them in Docker containers. A sample Dockerfile could look like:</p>
+
+					<pre><code data-line-numbers="|1|2|3-8|9|10|11|12|13" data-trim><script type="text/template">
+						FROM python:3.12-slim
+						WORKDIR /app
+						RUN apt-get update && apt-get install -y \
+							build-essential \
+							curl \
+							software-properties-common \
+							git \
+							&& rm -rf /var/lib/apt/lists/*
+						RUN git clone https://github.com/{YOUR_USERNAME}/{YOUR_GITHUB_REPO}.git .
+						RUN pip3 install -r requirements.txt
+						EXPOSE 8501
+						HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+						ENTRYPOINT ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/background/construction.jpg" data-background-opacity="0.2">
+					<h3>Deploying in Docker</h3>
+					
+					<p>Once you have a Dockerfile, you can build the image and run it. The following command will create a Docker image called "streamlit" based on your current directory's solution, including Dockerfile. It will then run an instance of the container image on port 8501.</p>
+
+					<pre><code data-trim><script type="text/template">
+						docker build -t streamlit .
+						docker run -p 8501:8501 streamlit
+					</script></code></pre>
+				</section>
+
+				<section data-background-image="presentation/assets/background/clouds-orange-2.jpg" data-background-opacity="0.2">
+					<h3>Hosting on Streamlit Community Cloud</h3>
+					
+					<p>Streamlit offers a free service for hosting your applications, called Streamlit Community Cloud. This works well for demo apps or community tools, and there are some limited capabilities for restricting access to apps.</p>
+				</section>
+
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Hosting on Streamlit Community Cloud</h3>
+
+					<img src="presentation/assets/image/StreamlitCommunityCloud.jpeg" height="550" />
+				</section>
+
+				<section data-background-image="presentation/assets/background/clouds.jpg" data-background-opacity="0.2">
+					<h3>Hosting in Snowflake</h3>
+					
+					<p>If you are a Snowflake customer, you can host Streamlit applications in Snowflake, unless you are using AWS PrivateLink or Azure Private Link.</p>
+
+					<p>There are some product limitations versus self-hosting, but this is a good option for Snowflake customers who want to keep their data close to their data warehouse.</p>
+				</section>
+
+				<section data-background-image="presentation/assets/background/notebook.jpg" data-background-opacity="0.2">
+					<h3>Hosting Tips and Tricks</h3>
+					
+					<ul>
+						<li>Streamlit is not a general-purpose web framework, so you may need to use a different tool for more complex web applications</li>
+						<li class="fragment">Limit input ranges to reduce network traffic and improve performance</li>
+						<li class="fragment">Take advantage of caching to reduce the number of times you need to re-run expensive computations</li>
+						<li class="fragment">Keep expensive assets (e.g., trained models) local--don't download them every time you run the app</li>
+						<li class="fragment">Optimize queries and API calls to reduce latency</li>
+						<li class="fragment">Use a proxy server (like NGINX) and you can host multiple copies of your Streamlit app at once for load balancing</li>
+					</ul>
+				</section>
+
+				<section data-background-image="presentation/assets/background/wrappingup.jpg" data-background-opacity="0.2">
+					<h3>Wrapping Up</h3>
+
+					<p>Over the course of this talk, we have gained an understanding of what Streamlit is, how quickly you can build a Streamlit application, and various options available for hosting Streamlit applications.</p>
+				</section>
+				
+				<section data-background-image="presentation/assets/image/Bubbles.jpg" data-background-opacity="0.4">
+					<h3>Wrapping Up</h3>
+					
+					<p>
+						To learn more, go here:
+						<br />
+						<a href="https://csmore.info/on/streamlit">https://csmore.info/on/streamlit</a>
+					</p>
+					<p>
+						And for help, contact me:
+						<br />
+						<a href="mailto:feasel@catallaxyservices.com">feasel@catallaxyservices.com</a> | <a href="https://www.twitter.com/feaselkl">@feaselkl</a>
+					</p>
+					<br />
+					<p>
+						Catallaxy Services consulting:
+						<br />
+						<a href="https://csmore.info/contact">https://CSmore.info/on/contact</a>
+					</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="../reveal.js/dist/reveal.js"></script>
+		<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+		<script src="../reveal.js/plugin/notes/notes.js"></script>
+		<script src="../reveal.js/plugin/search/search.js"></script>
+		<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal.js/plugin/math/math.js"></script>
+		<script src="../reveal.js/plugin/menu/menu.js"></script>
+		<script src="../reveal.js/plugin/highlight/highlight.js"></script>
+		<script src="../reveal.js/plugin/chart/Chart.min.js"></script>
+		<script src="../reveal.js/plugin/chart/plugin.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				width: '70%',
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+				transition: 'fade',
+				
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight, RevealMath, RevealMenu, RevealChart ]
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,10 @@
+{
+    "AOAIEndpoint": "https://<YOUR_AZURE_OPENAI_ENDPOINT>.openai.azure.com/",
+    "AOAIKey": "<AZURE_OPENAI_KEY>",
+    "AOAIDeploymentName": "<YOUR_DEPLOYMENT_NAME>",
+    "SearchEndpoint": "https://<YOUR_SEARCH_ENDPOINT>.search.windows.net",
+    "SearchKey": "<YOUR_SEARCH_KEY>",
+    "SearchIndex": "<SEARCH_INDEX>",
+    "SpeechKey": "<YOUR_SPEECH_KEY>",
+    "SpeechRegion": "<SPEECH_REGION>"
+}
