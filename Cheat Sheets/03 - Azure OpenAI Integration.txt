@@ -1,4 +1,4 @@
-Demo 01 - Azure OpenAI Integration
+Demo 03 - Azure OpenAI Integration
 ----------------------------------
 
 - Start in the ROOT directory for this repo!
