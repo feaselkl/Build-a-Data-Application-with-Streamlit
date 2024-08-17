@@ -4,3 +4,4 @@ numpy
 pyodbc
 matplotlib
 plotly.express
+openai

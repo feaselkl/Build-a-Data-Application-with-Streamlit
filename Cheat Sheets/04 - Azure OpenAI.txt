@@ -1,0 +1,16 @@
+Demo 04 - Azure OpenAI
+----------------------
+
+- Start in the /code directory for this repo!
+- Install relevant packages
+    pip install -r requirements.txt
+- Review the code in code\index.py
+- Review the code in code\pages\1_Review_Parking_Tickets.py
+- Review the code in code\pages\2_Chat_with_Data.py
+- Kick off the Streamlit app
+    python -m streamlit run index.py --server.port 8080
+- Ask the following questions:
+    - What does it mean when a sign reads, "No parking in loop"?
+    - What does it mean when a sign in the city of Chicago reads, "No parking in loop"?
+    - How many parking tickets did the city of Chicago write in the year 2016?
+- Exit Streamlit from the console (Ctrl+C)
