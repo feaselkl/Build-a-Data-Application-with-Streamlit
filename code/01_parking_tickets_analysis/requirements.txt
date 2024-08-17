@@ -1,7 +1,0 @@
-pyodbc
-matplotlib
-plotly.express
-pandas
-numpy
-streamlit
-seaborn
