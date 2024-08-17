@@ -1,0 +1,45 @@
+Demo 03 - Forms and Filters
+---------------------------------------
+
+- Start in the ROOT directory for this repo!
+- If you have NOT created a virtual environment for this:
+    - Make a venv directory
+        mkdir ../venv
+    - Create a virtual environment
+        python -m venv ../venv/streamlit
+- Activate the virtual environment
+    On WINDOWS:         ..\venv\ex1\Scripts\activate.bat
+    On LINUX/MACOS:     source ../venv/ex1/bin/activate
+- Install relevant packages
+    pip install -r code/requirements.txt
+- Start SQL Server (container or locally) with ChicagoParkingTickets
+    - Download ChicagoParkingTickets.bak
+        - https://sqlsunday.com/2022/12/05/new-demo-database/ (learn more)
+        - https://public.sqlsunday.com/Chicago.bak (actual download)
+    (quick note: skip container work if running SQL Server locally)
+    - Start SQL Server 2022 container
+        - sudo docker pull mcr.microsoft.com/mssql/server:2022-latest
+        (quick note: choose your own password)
+        - sudo docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=YourStrong!Passw0rd' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest
+    - Copy backup file to container
+        - sudo docker cp ~/Downloads/Chicago.bak {container_id}:/var/opt/mssql/data/
+    - Restore database backup
+        - Connect to SQL Server instance
+        - Run the following script:
+            USE [master]
+            RESTORE DATABASE [ChicagoParkingTickets]
+                FROM DISK = N'/var/opt/mssql/data/Chicago.bak'
+                WITH FILE = 1,
+                MOVE N'ChicagoParkingTickets'
+                    TO N'/var/opt/mssql/data/ChicagoParkingTickets.mdf',
+                MOVE N'ChicagoParkingTickets_log'
+                    TO N'/var/opt/mssql/data/ChicagoParkingTickets_log.ldf',
+                NOUNLOAD, STATS = 5;
+- Get the latest ODBC driver if you do not have it
+    - Linux: https://learn.microsoft.com/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server
+    - Windows: https://learn.microsoft.com/sql/connect/odbc/windows/microsoft-odbc-driver-for-sql-server-on-windows
+- Review the code in code\index.py
+- Kick off the Streamlit app
+    - Navigate to the code directory (needed for secrets to work correctly)
+    python -m streamlit run index.py --server.port 8080
+- Exit Streamlit from the console (Ctrl+C)
