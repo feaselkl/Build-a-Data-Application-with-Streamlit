@@ -1,0 +1,18 @@
+Demo 01 - Parking Tickets Analysis Intro
+----------------------------------------
+
+- Start in the ROOT directory for this repo!
+- If you have NOT created a virtual environment for this:
+    - Make a venv directory
+        mkdir ../venv
+    - Create a virtual environment
+        python -m venv ../venv/streamlit
+- Activate the virtual environment
+    On WINDOWS:         ..\venv\ex1\Scripts\activate.bat
+    On LINUX/MACOS:     source ../venv/ex1/bin/activate
+- Install relevant packages
+    pip install -r code/requirements.txt
+- Review the code in code\index.py
+- Kick off the Streamlit app
+    python -m streamlit run code\index.py --server.port 8080
+- Exit Streamlit from the console (Ctrl+C)
