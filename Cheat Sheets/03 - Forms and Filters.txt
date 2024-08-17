@@ -1,0 +1,8 @@
+Demo 03 - Forms and Filters
+---------------------------
+
+- Start in the /code directory for this repo!
+- Review the code in code\index.py
+- Kick off the Streamlit app
+    python -m streamlit run index.py --server.port 8080
+- Exit Streamlit from the console (Ctrl+C)
