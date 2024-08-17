@@ -8,7 +8,7 @@ import json
  
 connection_string = st.secrets['db']['connection_string']
  
-@st.cache_data
+@st.cache_data(ttl=3600)
 def get_tickets_by_month():
     conn = pyodbc.connect(connection_string)
     # NOTE: this query works with SQL Server 2022
@@ -81,34 +81,58 @@ st.write("""
         This application provides a simple interface for analyzing parking tickets in Chicago. The data originally came from the City of Chicago's data portal. The great and wonderful Daniel Hutmacher [converted this data into a SQL Server database](https://sqlsunday.com/2022/12/05/new-demo-database/) and that is what we are querying in this application.
         """)
  
+st.header('Tickets by Month')
+tickets_by_month = get_tickets_by_month()
+ 
 # Sidebar widgets
 st.sidebar.header('Filters')
-st.sidebar.write("Use these options to filter the data.")
-st.sidebar.subheader('Violation Code')
-violation_codes = get_violation_codes()
-# format_func is a setting to control how the options are displayed in the dropdown
-violation_code = st.sidebar.selectbox(label='Select a violation code:', index=None, options=violation_codes['ViolationCode'].unique(),
-                format_func=lambda x: f'{x} - {violation_codes[violation_codes["ViolationCode"] == x]["ViolationDescription"].values[0]}')
+with st.sidebar.form("filter_form"):
+    st.write("Use these options to filter the data.")
+    st.subheader('Violation Code')
+    violation_codes = get_violation_codes()
+    # format_func is a setting to control how the options are displayed in the dropdown
+    violation_code = st.selectbox(label='Select a violation code:', index=None, 
+                    options=violation_codes['ViolationCode'].unique(),
+                    format_func=lambda x: f'{x} - {violation_codes[violation_codes["ViolationCode"] == x]["ViolationDescription"].values[0]}')
  
-st.sidebar.subheader('Ticket Status')
-ticket_status_codes = get_ticket_status_codes()
-ticket_status = st.sidebar.selectbox(label='Select a ticket status:', index=None, options=ticket_status_codes['TicketStatus'].unique())
+    st.subheader('Ticket Status')
+    ticket_status_codes = get_ticket_status_codes()
+    ticket_status = st.selectbox(label='Select a ticket status:', index=None, 
+                    options=ticket_status_codes['TicketStatus'].unique())
  
-st.sidebar.subheader('Notice Level')
-notice_level_codes = get_notice_level_codes()
-notice_level = st.sidebar.selectbox(label='Select a notice level:', index=None, options=notice_level_codes['NoticeLevel'].unique(),
-                format_func=lambda x: f'{x} - {notice_level_codes[notice_level_codes["NoticeLevel"] == x]["NoticeLevelDescription"].values[0]}')
+    st.subheader('Notice Level')
+    notice_level_codes = get_notice_level_codes()
+    notice_level = st.selectbox(label='Select a notice level:', index=None, 
+                    options=notice_level_codes['NoticeLevel'].unique(),
+                    format_func=lambda x: f'{x} - {notice_level_codes[notice_level_codes["NoticeLevel"] == x]["NoticeLevelDescription"].values[0]}')
+     
+    st.subheader('Date Range')
+    min_val = tickets_by_month['IssuedMonth'].min()
+    max_val = tickets_by_month['IssuedMonth'].max()
+    start_date = st.date_input('Start Date', format="YYYY-MM-DD", min_value=min_val, max_value=max_val, value=min_val)
+    end_date = st.date_input('End Date', format="YYYY-MM-DD", min_value=min_val, max_value=max_val, value=max_val)
  
-st.header('Tickets by Month')
- 
-tickets_by_month = get_tickets_by_month()
-# Perform filtering if filters are set
-if violation_code:
-    tickets_by_month = tickets_by_month[tickets_by_month['ViolationCode'] == violation_code]
-if ticket_status:
-    tickets_by_month = tickets_by_month[tickets_by_month['TicketStatus'] == ticket_status]
-if notice_level:
-    tickets_by_month = tickets_by_month[tickets_by_month['NoticeLevel'] == notice_level]
+    submitted = st.form_submit_button("Apply Filters")
+    if submitted:
+        # Perform filtering if filters are set
+        if violation_code:
+            st.caption(f'Filtering by violation code: :green[{violation_code}]')
+            tickets_by_month = tickets_by_month[tickets_by_month['ViolationCode'] == violation_code]
+        if ticket_status:
+            st.caption(f'Filtering by ticket status: :green[{ticket_status}]')
+            tickets_by_month = tickets_by_month[tickets_by_month['TicketStatus'] == ticket_status]
+        if notice_level:
+            st.caption(f'Filtering by notice level: :green[{notice_level}]')
+            tickets_by_month = tickets_by_month[tickets_by_month['NoticeLevel'] == notice_level]
+        if start_date and end_date and start_date > end_date:
+            st.warning('Start date should be before end date. We will flip the two for your convenience.')
+            start_date, end_date = end_date, start_date
+        if start_date:
+            st.caption(f'Filtering by start date: :green[{start_date}]')
+            tickets_by_month = tickets_by_month[tickets_by_month['IssuedMonth'].dt.date >= start_date]
+        if end_date:
+            st.caption(f'Filtering by end date: :green[{end_date}]')
+            tickets_by_month = tickets_by_month[tickets_by_month['IssuedMonth'].dt.date <= end_date]
  
 # Aggregate filtered data
 agg_tickets_by_month = tickets_by_month.groupby('IssuedMonth').agg({'NumberOfTickets': 'sum', 'TotalFineAmount': 'sum', 'TotalLateFee': 'sum', 'TotalCollectionFee': 'sum', 'TotalAmountPaid': 'sum', 'TotalAmountDue': 'sum'}).reset_index().sort_values(by='IssuedMonth', ascending=False)
