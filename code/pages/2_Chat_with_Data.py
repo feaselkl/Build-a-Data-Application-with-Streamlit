@@ -22,7 +22,38 @@ def create_chat_completion(aoai_deployment_name, messages, aoai_endpoint, aoai_k
         stream=True
     )
  
-def handle_chat_prompt(prompt, deployment_name, aoai_endpoint, aoai_key):
+def create_chat_with_data_completion(aoai_deployment_name, messages, aoai_endpoint, aoai_key, search_endpoint, search_key, search_index_name):
+    client = openai.AzureOpenAI(
+        api_key=aoai_key,
+        api_version="2024-06-01",
+        azure_endpoint=aoai_endpoint
+    )
+    # Create and return a new chat completion request
+    return client.chat.completions.create(
+        model=aoai_deployment_name,
+        messages=[
+            {"role": m["role"], "content": m["content"]}
+            for m in messages
+        ],
+        stream=True,
+        extra_body={
+            "data_sources": [
+                {
+                    "type": "azure_search",
+                    "parameters": {
+                        "endpoint": search_endpoint,
+                        "index_name": search_index_name,
+                        "authentication": {
+                            "type": "api_key",
+                            "key": search_key
+                        }
+                    }
+                }
+            ]
+        }
+    )
+ 
+def handle_chat_prompt(prompt, deployment_name, aoai_endpoint, aoai_key, search_endpoint, search_key, search_index_name, model_type):
     # Echo the user's prompt to the chat window
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -35,10 +66,16 @@ def handle_chat_prompt(prompt, deployment_name, aoai_endpoint, aoai_key):
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         full_response = ""
-        for response in create_chat_completion(deployment_name, st.session_state.messages, aoai_endpoint, aoai_key):
-            if response.choices:
-                full_response += (response.choices[0].delta.content or "")
-                message_placeholder.markdown(full_response + "▌")
+        if model_type == "Use base GPT-4 model":
+            for response in create_chat_completion(deployment_name, st.session_state.messages, aoai_endpoint, aoai_key):
+                if response.choices:
+                    full_response += (response.choices[0].delta.content or "")
+                    message_placeholder.markdown(full_response + "▌")
+        else:
+            for response in create_chat_with_data_completion(deployment_name, st.session_state.messages, aoai_endpoint, aoai_key, search_endpoint, search_key, search_index_name):
+                if response.choices:
+                    full_response += (response.choices[0].delta.content or "")
+                    message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})
  
@@ -51,6 +88,8 @@ def main():
     """
     )
  
+    model_type = st.sidebar.radio(label = "Select an Option", options = ["Use base GPT-4 model", "Use schema-aware GPT-4 model"])
+ 
     # Initialize chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
@@ -59,6 +98,10 @@ def main():
     aoai_key = st.secrets["aoai"]["key"]
     aoai_deployment_name = st.secrets["aoai"]["deployment_name"]
  
+    search_endpoint = st.secrets["search"]["endpoint"]
+    search_key = st.secrets["search"]["key"]
+    search_index_name = st.secrets["search"]["index_name"]
+ 
     # Display chat messages from history on app rerun
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
@@ -66,7 +109,7 @@ def main():
  
     # Await a user message and handle the chat prompt when it comes in.
     if prompt := st.chat_input("Enter a message:"):
-        handle_chat_prompt(prompt, aoai_deployment_name, aoai_endpoint, aoai_key)
+        handle_chat_prompt(prompt, aoai_deployment_name, aoai_endpoint, aoai_key, search_endpoint, search_key, search_index_name, model_type)
  
 if __name__ == "__main__":
     main()
