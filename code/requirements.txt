@@ -1,3 +1,6 @@
 streamlit
 pandas
 numpy
+pyodbc
+matplotlib
+plotly.express
