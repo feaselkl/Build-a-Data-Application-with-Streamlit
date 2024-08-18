@@ -5,3 +5,5 @@ pyodbc
 matplotlib
 plotly.express
 openai
+streamlit-extras
+azure-cognitiveservices-speech>=1.33.0
