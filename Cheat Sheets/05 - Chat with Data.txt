@@ -1,0 +1,14 @@
+Demo 05 - Chat with Data
+------------------------
+
+- Start in the /code directory for this repo!
+- Review /data folder
+- Review the code in code\pages\2_Chat_with_Data.py
+- Kick off the Streamlit app
+    python -m streamlit run index.py --server.port 8080
+- Ask the following questions, using the base GPT-4 model first and then schema-aware after that:
+    - What are the columns available on Tickets.Parking_Violations?
+    - How can I connect poverty rate and unemployment rate to data I'm querying from Tickets.Parking_Violations?
+    - What is the primary key on the Buildings table, and what columns does it contain?
+    - What were the top three priorities of Grover Cleveland's first term in office as President of the United States?
+- Exit Streamlit from the console (Ctrl+C)
