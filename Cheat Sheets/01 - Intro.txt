@@ -7,9 +7,10 @@ Demo 01 - Parking Tickets Analysis Intro
         mkdir ../venv
     - Create a virtual environment
         python -m venv ../venv/streamlit
+        (may need to be python3 on Linux)
 - Activate the virtual environment
-    On WINDOWS:         ..\venv\ex1\Scripts\activate.bat
-    On LINUX/MACOS:     source ../venv/ex1/bin/activate
+    On WINDOWS:         ..\venv\streamlit\Scripts\activate.bat
+    On LINUX/MACOS:     source ../venv/streamlit/bin/activate
 - Install relevant packages
     pip install -r code/requirements.txt
 - Review the code in code\index.py
